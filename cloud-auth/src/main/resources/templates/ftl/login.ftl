@@ -20,6 +20,7 @@
         <h2 class="form-signin-heading" align="center">统一认证系统</h2>
         <input type="text" name="username" class="form-control form-margin-top" placeholder="账号" required autofocus>
         <input type="password" name="password" class="form-control" placeholder="密码" required>
+        <input type="text" name="imageCode" class="form-control" placeholder="验证码" required>
         <button class="btn btn-lg btn-primary btn-block" type="submit">sign in</button>
       </form>
     </div>

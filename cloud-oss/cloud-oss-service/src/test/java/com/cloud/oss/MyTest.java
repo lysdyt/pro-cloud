@@ -2,8 +2,7 @@ package com.cloud.oss;
 
 import cn.hutool.core.io.FileUtil;
 import com.aliyun.oss.OSS;
-import com.aliyun.oss.model.PutObjectResult;
-import com.cloud.oss.props.OssProps;
+import com.cloud.common.oss.props.OssProps;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;

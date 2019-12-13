@@ -1,19 +1,19 @@
 server:
   port: 4040
   servlet:
-    context-path: /
+    context-path: /sso
 
 security:
   oauth2:
     client:
       client-id: client_1
-      client-secret: 123456
-      user-authorization-uri: http://localhost:8082/oauth/authorize
-      access-token-uri: http://localhost:8082/oauth/token
-      scope: server
+      client-secret: secret
+      user-authorization-uri: http://localhost:9000/oauth/authorize
+      access-token-uri: http://localhost:9000/oauth/token
+      scope: app
     resource:
       loadBalanced: true
-      token-info-uri: http://localhost:8082/oauth/check_token
+      token-info-uri: http://localhost:9000/oauth/check_token
 
 spring:
   application:

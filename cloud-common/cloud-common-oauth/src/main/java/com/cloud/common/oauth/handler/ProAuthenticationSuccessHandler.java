@@ -21,8 +21,13 @@ import org.springframework.security.oauth2.common.exceptions.UnapprovedClientAut
 import org.springframework.security.oauth2.provider.*;
 import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
+import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
+import org.springframework.security.web.savedrequest.RequestCache;
+import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -46,6 +51,8 @@ public class ProAuthenticationSuccessHandler extends SavedRequestAwareAuthentica
 	@Autowired
 	private SecurityProperties securityProperties;
 
+	private RequestCache requestCache = new HttpSessionRequestCache();
+
 	/**
 	 * 用lazy 解决死循环问题
 	 */
@@ -58,44 +65,53 @@ public class ProAuthenticationSuccessHandler extends SavedRequestAwareAuthentica
 	@SuppressWarnings("unchecked")
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-                                        Authentication authentication) throws IOException {
+                                        Authentication authentication) throws ServletException, IOException {
 
-		logger.info("登录成功");
+		log.info("登录成功");
 
-		String header = request.getHeader(HttpHeaders.AUTHORIZATION);
-		String clientId = securityProperties.getClient().getClientId();
-		String clientSecret = securityProperties.getClient().getClientSecret();
-		if (StrUtil.isNotBlank(header) && header.startsWith(BEARER_TOKEN_TYPE)) {
-			String[] tokens = extractAndDecodeHeader(header);
-			assert tokens.length == 2;
-			clientId = tokens[0];
-			clientSecret = tokens[1];
-			log.info("请求头中信息为clientId:{};clientSecret:{}", clientId, clientSecret);
-		}
-		ClientDetails clientDetails = clientDetailsService.loadClientByClientId(clientId);
-
-		if (StrUtil.isBlank(clientSecret)) {
-			throw new UnapprovedClientAuthenticationException("clientId对应的配置信息不存在:" + clientId);
+		SavedRequest savedRequest = this.requestCache.getRequest(request, response);
+		String targetUrlParameter = this.getTargetUrlParameter();
+		boolean status = !this.isAlwaysUseDefaultTargetUrl() && (targetUrlParameter == null || !StringUtils.hasText(request.getParameter(targetUrlParameter)));
+		if (savedRequest != null && status) {
+			this.clearAuthenticationAttributes(request);
+			String targetUrl = savedRequest.getRedirectUrl();
+			log.info("Redirecting to DefaultSavedRequest Url: {}", targetUrl);
+			this.getRedirectStrategy().sendRedirect(request, response, targetUrl);
 		} else {
-			if (!passwordEncoder.matches(clientSecret, clientDetails.getClientSecret())) {
-				throw new UnapprovedClientAuthenticationException("clientSecret不匹配:" + clientId);
+			String header = request.getHeader(HttpHeaders.AUTHORIZATION);
+			String clientId = securityProperties.getClient().getClientId();
+			String clientSecret = securityProperties.getClient().getClientSecret();
+			if (StrUtil.isNotBlank(header) && header.startsWith(BEARER_TOKEN_TYPE)) {
+				String[] tokens = extractAndDecodeHeader(header);
+				assert tokens.length == 2;
+				clientId = tokens[0];
+				clientSecret = tokens[1];
+				log.info("请求头中信息为clientId:{};clientSecret:{}", clientId, clientSecret);
 			}
-		}
+			ClientDetails clientDetails = clientDetailsService.loadClientByClientId(clientId);
 
-		TokenRequest tokenRequest = new TokenRequest(MapUtil.newHashMap(), clientId, clientDetails.getScope(), "app");
+			if (StrUtil.isBlank(clientSecret)) {
+				throw new UnapprovedClientAuthenticationException("clientId对应的配置信息不存在:" + clientId);
+			} else {
+				if (!passwordEncoder.matches(clientSecret, clientDetails.getClientSecret())) {
+					throw new UnapprovedClientAuthenticationException("clientSecret不匹配:" + clientId);
+				}
+			}
 
-		OAuth2Request oAuth2Request = tokenRequest.createOAuth2Request(clientDetails);
+			TokenRequest tokenRequest = new TokenRequest(MapUtil.newHashMap(), clientId, clientDetails.getScope(), "custom");
+			OAuth2Request oAuth2Request = tokenRequest.createOAuth2Request(clientDetails);
+			OAuth2Authentication oAuth2Authentication = new OAuth2Authentication(oAuth2Request, authentication);
 
-		OAuth2Authentication oAuth2Authentication = new OAuth2Authentication(oAuth2Request, authentication);
-
-		OAuth2AccessToken token = authorizationServerTokenServices.createAccessToken(oAuth2Authentication);
+			OAuth2AccessToken token = authorizationServerTokenServices.createAccessToken(oAuth2Authentication);
 //		SecurityUser principal = (SecurityUser) authentication.getPrincipal();
 
-		//todo  记录日志 UserService.handlerLoginData(token, principal, request);
+			//todo  记录日志 UserService.handlerLoginData(token, principal, request);
 //		log.info("用户【 {} 】记录登录日志", principal.getUsername());
 
-		response.setContentType("application/json;charset=UTF-8");
-		response.getWriter().write(objectMapper.writeValueAsString(Result.success(token)));
+			response.setContentType("application/json;charset=UTF-8");
+			response.getWriter().write(objectMapper.writeValueAsString(Result.success(token)));
+		}
+
 
 	}
 
