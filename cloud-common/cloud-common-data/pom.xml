@@ -22,6 +22,12 @@
             <artifactId>feign-okhttp</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>p6spy</groupId>
+            <artifactId>p6spy</artifactId>
+            <version>${p6spy.version}</version>
+        </dependency>
+
         <!--mysql 驱动-->
         <dependency>
             <groupId>mysql</groupId>
