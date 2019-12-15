@@ -91,6 +91,8 @@ generator/code?tableName=sys_user&moduleName=admin&comments=用户表
 3. [Nacos](https://nacos.io/zh-cn/docs/quick-start.html)
 4. [hutool](https://www.hutool.cn/docs/#/)
 
+#### 欢迎加群
+![输入图片说明](https://images.gitee.com/uploads/images/2019/1215/121918_e9a94535_1236464.png "Pro-Cloud群聊二维码.png")
 
 #### Pro-Cloud建设
 
