@@ -92,7 +92,7 @@ generator/code?tableName=sys_user&moduleName=admin&comments=用户表
 4. [hutool](https://www.hutool.cn/docs/#/)
 
 #### 欢迎加群
-![输入图片说明](https://images.gitee.com/uploads/images/2019/1215/121918_e9a94535_1236464.png "Pro-Cloud群聊二维码.png")
+![输入图片说明](https://images.gitee.com/uploads/images/2019/1215/163449_2bc2955e_1236464.png "Pro-Cloud交流群群聊二维码.png")
 
 #### Pro-Cloud建设
 
