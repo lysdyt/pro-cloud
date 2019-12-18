@@ -146,6 +146,7 @@ public class UserUtil {
     public static List<SysRole> getRoleAll(){
         return sysRoleService.list(Wrappers.emptyWrapper());
     }
+
     /**
      * 获取到最大的 数据权限
      *  数值越小 数据权限最大 默认最小权限数字为4
@@ -163,5 +164,50 @@ public class UserUtil {
     }
 
 
+    /**
+     * 获取到最大的 数据权限  可以将角色中某个角色权限放大放小
+     *   数值越小 数据权限最大 默认最小权限数字为4 给某个角色重新赋予 某个权限
+     * @param en
+     * @param dataScope
+     * @return
+     */
+    public static int getMaxReplaceDataScope(String en, int dataScope){
+        // 获取到最大的数据权限范围
+        int dataScopeInteger = DataScope.DATA_SCOPE_SELF;
+        for (RoleDTO r : UserUtil.getRoleList()){
+            if (r.getEnname().equals(en)) {
+                r.setDataScope(dataScope);
+            }
+            if (r.getDataScope() < dataScopeInteger){
+                dataScopeInteger = r.getDataScope();
+            }
+        }
+        return dataScopeInteger;
+    }
+
+
+    /**
+     * 获取到最大的 数据权限 如果拥有某个角色就直接返回 该角色的权限范围或者自定义
+     *   数值越小 数据权限最大 默认最小权限数字为4 给某个角色重新赋予 某个权限
+     * @param en
+     * @param dataScope 为 null 时表示 用本身角色权限
+     * @return
+     */
+    public static int getMaxInDataScope(String en, Integer dataScope){
+        // 获取到最大的数据权限范围
+        int dataScopeInteger = DataScope.DATA_SCOPE_SELF;
+        for (RoleDTO r : UserUtil.getRoleList()){
+            if (r.getEnname().equals(en)) {
+                if (dataScope == null) {
+                    return r.getDataScope();
+                }
+               return dataScope;
+            }
+            if (r.getDataScope() < dataScopeInteger){
+                dataScopeInteger = r.getDataScope();
+            }
+        }
+        return dataScopeInteger;
+    }
 
 }
