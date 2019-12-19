@@ -60,7 +60,9 @@ feign:
 #feign:
 #  hystrix:
 #    enabled: true
-
+security:
+  oauth2:
+    reuseRefreshToken: false
 
 hystrix:
   command:

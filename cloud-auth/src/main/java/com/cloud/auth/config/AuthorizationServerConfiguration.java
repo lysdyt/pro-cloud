@@ -3,7 +3,8 @@ package com.cloud.auth.config;
 import com.cloud.auth.component.Auth2ResponseExceptionTranslator;
 import com.cloud.auth.service.ProJdbcClientDetailsService;
 import com.cloud.common.util.var.RedisKeys;
-import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
@@ -25,16 +26,22 @@ import org.springframework.security.oauth2.provider.token.store.redis.RedisToken
  * @since  2019/5/8
  */
 @Configuration
-@AllArgsConstructor
 @EnableAuthorizationServer
 public class AuthorizationServerConfiguration extends AuthorizationServerConfigurerAdapter {
 
+    @Autowired
+    private ProJdbcClientDetailsService jdbcClientDetailsService;
+    @Autowired
+    private AuthenticationManager authenticationManager;
+    @Autowired
+    private UserDetailsService userDetailsService;
+    @Autowired
+    private CustomTokenEnhancer customTokenEnhancer;
+    @Autowired
+    private RedisConnectionFactory redisConnectionFactory;
 
-    private final ProJdbcClientDetailsService jdbcClientDetailsService;
-    private final AuthenticationManager authenticationManager;
-    private final UserDetailsService userDetailsService;
-    private final CustomTokenEnhancer customTokenEnhancer;
-    private final RedisConnectionFactory redisConnectionFactory;
+    @Value("${security.oauth2.reuseRefreshToken:false}")
+    private boolean reuseRefreshToken;
 
     @Bean
     public TokenStore tokenStore() {
@@ -72,7 +79,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
                 .tokenEnhancer(customTokenEnhancer)
                 .userDetailsService(userDetailsService)
                 .authenticationManager(authenticationManager)
-                .reuseRefreshTokens(false)
+                .reuseRefreshTokens(reuseRefreshToken)
                 .pathMapping("/oauth/confirm_access", "/token/confirm_access")
                 .exceptionTranslator(new Auth2ResponseExceptionTranslator());
     }
