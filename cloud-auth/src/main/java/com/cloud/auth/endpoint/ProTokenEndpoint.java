@@ -3,6 +3,7 @@ package com.cloud.auth.endpoint;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.cloud.auth.util.SecurityUtil;
 import com.cloud.common.cache.constants.CacheScope;
 import com.cloud.common.cache.redis.RedisDao;
 import com.cloud.common.cache.util.CacheUtil;
@@ -72,16 +73,17 @@ public class ProTokenEndpoint {
 	 */
 	@GetMapping("/confirm_access")
 	public ModelAndView confirm(HttpServletRequest request, HttpSession session, ModelAndView modelAndView) {
-//		Map<String, Object> scopeList = (Map<String, Object>) request.getAttribute("scopes");
-//		modelAndView.addObject("scopeList", scopeList.keySet());
-//
-//		Object auth = session.getAttribute("authorizationRequest");
-//		if (auth != null) {
-//			AuthorizationRequest authorizationRequest = (AuthorizationRequest) auth;
-//			ClientDetails clientDetails = clientDetailsService.loadClientByClientId(authorizationRequest.getClientId());
-//			modelAndView.addObject("app", clientDetails.getAdditionalInformation());
-////			modelAndView.addObject("user", SecurityUtils.getUser());
-//		}
+		Map<String, Object> scopeList = (Map<String, Object>) request.getAttribute("scopes");
+		modelAndView.addObject("scopeList", scopeList.keySet());
+
+		Object auth = session.getAttribute("authorizationRequest");
+		if (auth != null) {
+			AuthorizationRequest authorizationRequest = (AuthorizationRequest) auth;
+			ClientDetails clientDetails = clientDetailsService.loadClientByClientId(authorizationRequest.getClientId());
+			modelAndView.addObject("app", clientDetails.getAdditionalInformation());
+			modelAndView.addObject("user", SecurityUtil.getUser());
+		}
+
 		modelAndView.setViewName("ftl/confirm");
 		return modelAndView;
 	}

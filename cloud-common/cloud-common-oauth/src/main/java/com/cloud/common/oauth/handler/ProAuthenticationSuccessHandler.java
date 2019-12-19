@@ -109,7 +109,7 @@ public class ProAuthenticationSuccessHandler extends SavedRequestAwareAuthentica
 //		log.info("用户【 {} 】记录登录日志", principal.getUsername());
 
 			response.setContentType("application/json;charset=UTF-8");
-			response.getWriter().write(objectMapper.writeValueAsString(Result.success(token)));
+			response.getWriter().write(objectMapper.writeValueAsString(token));
 		}
 
 
