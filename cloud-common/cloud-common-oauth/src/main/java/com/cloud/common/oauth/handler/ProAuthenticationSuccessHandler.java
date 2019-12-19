@@ -5,7 +5,6 @@ import cn.hutool.core.map.MapUtil;
 
 import cn.hutool.core.util.StrUtil;
 import com.cloud.common.oauth.properties.SecurityProperties;
-import com.cloud.common.util.base.Result;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 
