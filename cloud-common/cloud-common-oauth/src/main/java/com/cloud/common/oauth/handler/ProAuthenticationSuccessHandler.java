@@ -5,6 +5,7 @@ import cn.hutool.core.map.MapUtil;
 
 import cn.hutool.core.util.StrUtil;
 import com.cloud.common.oauth.properties.SecurityProperties;
+import com.cloud.common.oauth.security.SecurityUser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 
@@ -65,9 +66,7 @@ public class ProAuthenticationSuccessHandler extends SavedRequestAwareAuthentica
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws ServletException, IOException {
-
-		log.info("登录成功");
-
+		SecurityUser user = (SecurityUser)authentication.getPrincipal();
 		SavedRequest savedRequest = this.requestCache.getRequest(request, response);
 		String targetUrlParameter = this.getTargetUrlParameter();
 		boolean status = !this.isAlwaysUseDefaultTargetUrl() && (targetUrlParameter == null || !StringUtils.hasText(request.getParameter(targetUrlParameter)));
@@ -100,14 +99,10 @@ public class ProAuthenticationSuccessHandler extends SavedRequestAwareAuthentica
 			TokenRequest tokenRequest = new TokenRequest(MapUtil.newHashMap(), clientId, clientDetails.getScope(), "custom");
 			OAuth2Request oAuth2Request = tokenRequest.createOAuth2Request(clientDetails);
 			OAuth2Authentication oAuth2Authentication = new OAuth2Authentication(oAuth2Request, authentication);
-
 			OAuth2AccessToken token = authorizationServerTokenServices.createAccessToken(oAuth2Authentication);
-//		SecurityUser principal = (SecurityUser) authentication.getPrincipal();
-
-			//todo  记录日志 UserService.handlerLoginData(token, principal, request);
-//		log.info("用户【 {} 】记录登录日志", principal.getUsername());
-
 			response.setContentType("application/json;charset=UTF-8");
+
+			log.info("用户【 {} 】记录登录日志", user.getUsername());
 			response.getWriter().write(objectMapper.writeValueAsString(token));
 		}
 
