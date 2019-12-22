@@ -13,7 +13,7 @@
         <java.version>1.8</java.version>
         <spring-cloud.version>Greenwich.SR3</spring-cloud.version>
         <spring-platform.version>Cairo-SR7</spring-platform.version>
-        <hutool.version>5.0.7</hutool.version>
+        <hutool.version>5.1.0</hutool.version>
         <HikariCP.version>3.2.0</HikariCP.version>
         <swagger.version>2.9.2</swagger.version>
         <spring-boot.version>2.1.7.RELEASE</spring-boot.version>
