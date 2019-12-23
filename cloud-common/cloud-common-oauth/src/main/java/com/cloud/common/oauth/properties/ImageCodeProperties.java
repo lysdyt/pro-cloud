@@ -20,10 +20,10 @@ public class ImageCodeProperties extends SmsCodeProperties {
 	/**
 	 * 图片宽
 	 */
-	private int width = 67;
+	private int width = 100;
 	/**
 	 * 图片高
 	 */
-	private int height = 23;
+	private int height = 33;
 
 }

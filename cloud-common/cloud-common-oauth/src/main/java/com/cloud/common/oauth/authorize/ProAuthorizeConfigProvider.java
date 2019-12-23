@@ -27,7 +27,7 @@ public class ProAuthorizeConfigProvider implements AuthorizeConfigProvider {
 	public boolean config(ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry config) {
 		config.antMatchers(SecurityConstants.DEFAULT_SIGN_IN_URL_MOBILE,
 				SecurityConstants.DEFAULT_VALIDATE_CODE_URL_PREFIX + "/*", "/token/**",
-				"/druid/**", "/auth/**", "/css/**", "/actuator/**", "/actuator", "/social/**", "/social").permitAll();
+				"/druid/**", "/auth/**", "/assets/**", "/actuator/**", "/actuator", "/social/**", "/social").permitAll();
 		return false;
 	}
 
