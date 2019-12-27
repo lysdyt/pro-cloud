@@ -21,7 +21,7 @@
         <mybatis-plus-boot-starter.version>3.3.0</mybatis-plus-boot-starter.version>
         <jasypt.version>2.1.1</jasypt.version>
         <curator.version>4.2.0</curator.version>
-        <xxl-job.version>2.1.1</xxl-job.version>
+        <xxl-job.version>2.1.2</xxl-job.version>
         <ali-java-sdk-core.version>4.1.0</ali-java-sdk-core.version>
         <hibernate-validator.version>6.0.17.Final</hibernate-validator.version>
         <aliyun-sdk-oss.version>3.5.0</aliyun-sdk-oss.version>

@@ -2,6 +2,7 @@ package com.cloud.job;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
 
 /**
@@ -10,6 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @Date 2019/4/28
  */
 @SpringBootApplication
+@ComponentScan(basePackages = {"com.cloud.job","com.cloud.common.job"})
 public class CloudJobApplication {
 
     public static void main(String[] args) {
