@@ -11,6 +11,7 @@ import com.cloud.admin.service.SysMenuService;
 import com.cloud.admin.util.UserUtil;
 import com.cloud.common.cache.constants.CacheScope;
 import com.cloud.common.cache.util.CacheUtil;
+import com.cloud.common.controller.base.BaseController;
 import com.cloud.common.data.util.ObjUtil;
 import com.cloud.common.data.util.TreeUtil;
 import com.cloud.common.util.base.Result;
@@ -38,7 +39,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/menu")
-public class SysMenuController {
+public class SysMenuController extends BaseController {
 
     @Autowired
     private SysMenuService sysMenuService;
