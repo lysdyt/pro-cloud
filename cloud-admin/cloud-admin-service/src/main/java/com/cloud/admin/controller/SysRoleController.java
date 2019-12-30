@@ -8,6 +8,9 @@ import com.cloud.common.util.base.Result;
 import com.cloud.admin.beans.po.SysRole;
 import com.cloud.admin.service.SysRoleService;
 import com.cloud.common.util.enums.ResultEnum;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.security.access.prepost.PreAuthorize;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +40,7 @@ public class SysRoleController {
      */
     @GetMapping("/listALL")
     @PreAuthorize("@pms.hasPermission('admin_sysrole_view')")
+    @ApiOperation(value = "查询用户拥有的角色", notes = "查询用户拥有的角色信息")
     public Result getSysRoleAll() {
         return Result.success(UserUtil.getRoleAll());
     }

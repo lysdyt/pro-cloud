@@ -1,16 +1,21 @@
 package com.cloud.common.swagger.config;
 
+import com.google.common.collect.Lists;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import springfox.documentation.builders.ApiInfoBuilder;
-import springfox.documentation.builders.PathSelectors;
-import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.service.ApiInfo;
-import springfox.documentation.service.Contact;
+import springfox.documentation.builders.*;
+import springfox.documentation.schema.ModelRef;
+import springfox.documentation.service.*;
 import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * swagger实现
@@ -22,25 +27,83 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @ConditionalOnProperty(name = "swagger.enabled", matchIfMissing = true )
 public class SwaggerConfig {
 
+
     @Bean
-    public Docket api() {
+    @ConditionalOnMissingBean
+    public SwaggerProperties swaggerProperties() {
+        return new SwaggerProperties();
+    }
+
+    @Bean
+    public Docket api(SwaggerProperties sp) {
         return new Docket(DocumentationType.SWAGGER_2)
-                .apiInfo(apiInfo())
+                .host(sp.getHost())
+                .apiInfo(apiInfo(sp))
                 .select()
                 // 自行修改为自己的包路径
-                .apis(RequestHandlerSelectors.basePackage("com.cloud"))
+                .apis(RequestHandlerSelectors.basePackage(sp.getBasePackage()))
                 .paths(PathSelectors.any())
+                .build()
+                .securitySchemes(securitySchemes())
+                .securityContexts(securityContexts());
+    }
+
+    private ApiInfo apiInfo(SwaggerProperties sp) {
+        return new ApiInfoBuilder()
+                .title(sp.getTitle())
+                .description(sp.getDescription())
+                //服务条款网址
+                .license(sp.getLicense())
+                .licenseUrl(sp.getLicenseUrl())
+                .termsOfServiceUrl(sp.getTermsOfServiceUrl())
+                .version(sp.getVersion())
+                .contact(new Contact(sp.getContact().getName(), sp.getContact().getUrl(), sp.getContact().getEmail()))
                 .build();
     }
 
-    private ApiInfo apiInfo() {
-        return new ApiInfoBuilder()
-                .title("Hcloud 微服务架构")
-                .description("Hcloud 微服务架构 操作文档")
-                //服务条款网址
-                .termsOfServiceUrl("http://www.eduvipx.cn/")
-                .version("1.0")
-                .contact(new Contact("Hcloud", "http://www.eduvipx.com/", "jxaijm94@163.com"))
+    private List<ApiKey> securitySchemes() {
+        return Lists.newArrayList(
+                new ApiKey("Authorization", "Authorization", "header"));
+    }
+    @Bean
+    public SecurityScheme oauth(SwaggerProperties sp) {
+        return new OAuthBuilder()
+                .name("OAuth2")
+                .scopes(scopes())
+                .grantTypes(grantTypes(sp))
                 .build();
     }
+
+    private List<AuthorizationScope> scopes() {
+        return Lists.newArrayList(new AuthorizationScope("app", "Grants openid access"));
+    }
+
+
+    public List<GrantType> grantTypes(SwaggerProperties sp) {
+        List<GrantType> grantTypes = new ArrayList<>();
+        grantTypes.add(new ResourceOwnerPasswordCredentialsGrant(sp.getAuthorization().getUserAuthorizationUri()));
+        return grantTypes;
+    }
+
+
+
+
+    private List<SecurityContext> securityContexts() {
+        return Lists.newArrayList(
+                SecurityContext.builder()
+                        .securityReferences(defaultAuth())
+                        .forPaths(PathSelectors.regex("^(?!auth).*$"))
+                        .build()
+        );
+    }
+
+    List<SecurityReference> defaultAuth() {
+        AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
+        AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
+        authorizationScopes[0] = authorizationScope;
+        return Lists.newArrayList(
+                new SecurityReference("Authorization", authorizationScopes));
+    }
+
+
 }

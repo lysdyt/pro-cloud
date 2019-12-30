@@ -2,6 +2,7 @@ package com.cloud.common.entity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.google.common.collect.Maps;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -17,6 +18,7 @@ import java.util.Map;
  */
 @Data
 @Accessors(chain = true)
+@ApiModel(description = "基础字段")
 public class BaseEntity<T> implements Serializable {
 
 	private static final long serialVersionUID = 1L;

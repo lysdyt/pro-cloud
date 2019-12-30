@@ -6,6 +6,9 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.cloud.admin.beans.po.SysDictList;
 import com.cloud.admin.service.SysDictListService;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.security.access.prepost.PreAuthorize;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,6 +63,10 @@ public class SysDictListController {
      */
     @GetMapping("/type/{typeCode}")
     @PreAuthorize("@pms.hasPermission('admin_sysdictlist_view')")
+    @ApiOperation(value = "任务字典typeCode查询", notes = "任务字典typeCode查询")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "typeCode", value = "字典类型", required = true, dataType = "String", paramType = "query")
+    })
     public Result getByTypeCode(@PathVariable("typeCode") String typeCode) {
         return Result.success(DictUtil.getDictLists(typeCode,null));
     }
