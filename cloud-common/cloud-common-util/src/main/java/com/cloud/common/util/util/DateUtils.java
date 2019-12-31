@@ -20,6 +20,7 @@ public class DateUtils extends DateUtil {
 
 
     public static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HHmmss");
+    public static final DateTimeFormatter TIME_FORMDAY = DateTimeFormatter.ofPattern("HH:mm:ss");
     public static final DateTimeFormatter YEAR_MONTH_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM");
     public static final DateTimeFormatter SHORT_DATE_FORMATTER = DateTimeFormatter.ofPattern("yyMMdd");
     public static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");

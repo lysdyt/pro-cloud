@@ -12,7 +12,7 @@ import org.springframework.cloud.openfeign.FeignClient;
  * @author Aijm
  * @since 2019/5/11
  */
-@FeignClient(value = CloudServiceList.CLOUD_SMS)
+@FeignClient(value = CloudServiceList.CLOUD_MESSAGE)
 public interface ISmsService extends SmsService {
 
 

@@ -16,7 +16,7 @@ import javax.validation.Valid;
  * @Description  feign 邮件暴露接口
  * @Date 2019/9/11
  */
-@FeignClient(value = CloudServiceList.CLOUD_SMS)
+@FeignClient(value = CloudServiceList.CLOUD_MESSAGE)
 public interface ISendEmailService {
 
 

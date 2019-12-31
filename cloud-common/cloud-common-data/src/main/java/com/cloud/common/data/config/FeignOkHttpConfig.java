@@ -1,6 +1,7 @@
 package com.cloud.common.data.config;
 
 import feign.Feign;
+import feign.Logger;
 import okhttp3.ConnectionPool;
 import okhttp3.OkHttpClient;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
@@ -32,5 +33,10 @@ public class FeignOkHttpConfig {
 				.writeTimeout(feignWriteTimeout, TimeUnit.SECONDS).connectionPool(new ConnectionPool())
 //				 .addInterceptor(okHttpLoggingInterceptor)
 				.build();
+	}
+
+	@Bean
+	Logger.Level feignLogger(){
+		return Logger.Level.FULL;
 	}
 }
