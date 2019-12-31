@@ -70,6 +70,13 @@ security:
       ignore-urls:
         - /actuator/**
         - /actuator
+        - /v2/api-docs
+        - /swagger-resources
+        - /swagger-resources/**
+        - /configuration/ui
+        - /configuration/security
+        - /swagger-ui.html
+        - /webjars/**
     resource:
       token-info-uri: http://cloud-auth/oauth/check_token
       loadBalanced: true
@@ -82,3 +89,20 @@ management:
   endpoint:
     health:
       show-details: ALWAYS
+swagger:
+  basePackage: com.cloud.admin
+  title: Hcloud 微服务架构
+  description: Hcloud 微服务架构 操作文档
+  version: v2.0
+  license: http://www.eduvipx.cn
+  licenseUrl: http://www.eduvipx.cn/licenseUrl
+  termsOfServiceUrl: http://www.eduvipx.cn/termsOfServiceUrl
+  host: 127.0.0.1:9999
+  contact:
+    name: Hcloud
+    url: http://www.eduvipx.cn/url
+    email: jxaijm94@163.com
+  authorization:
+    userAuthorizationUri: http://127.0.0.1:9999/auth/oauth/token
+
+
