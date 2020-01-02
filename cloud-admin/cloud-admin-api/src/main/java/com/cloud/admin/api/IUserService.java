@@ -12,7 +12,7 @@ import org.springframework.cloud.openfeign.FeignClient;
  * @author Aijm
  * @since 2019/5/11
  */
-@FeignClient( value = CloudServiceList.CLOUD_ADMIN , fallback = UserServiceFallback.class)
+@FeignClient(contextId = "userService", value = CloudServiceList.CLOUD_ADMIN , fallback = UserServiceFallback.class)
 public interface IUserService extends UserService {
 
 
