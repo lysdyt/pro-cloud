@@ -25,6 +25,7 @@ spring:
           predicates:
             - Path=/auth/**
           filters:
+            - SwaggerHeaderFilter
             - StripPrefix=1
         - id: cloud-admin-service
           uri: lb://cloud-admin-service
@@ -32,6 +33,7 @@ spring:
           predicates:
             - Path=/admin/**
           filters:
+            - SwaggerHeaderFilter
             - StripPrefix=1
             - name: RequestRateLimiter
               args:
