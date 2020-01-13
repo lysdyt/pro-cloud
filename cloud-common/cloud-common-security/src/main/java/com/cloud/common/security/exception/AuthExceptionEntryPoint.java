@@ -32,6 +32,7 @@ public class AuthExceptionEntryPoint implements AuthenticationEntryPoint {
 	@SneakyThrows
 	public void commence(HttpServletRequest request, HttpServletResponse response,
 						 AuthenticationException authException) {
+		log.error("AuthExceptionEntryPoint:",authException.getMessage());
 		response.setCharacterEncoding(CharsetUtil.UTF_8);
 		response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
 
@@ -39,7 +40,7 @@ public class AuthExceptionEntryPoint implements AuthenticationEntryPoint {
 		if (authException != null) {
 			result.setData(authException.getMessage());
 		}
-		response.setStatus(HttpStatus.HTTP_OK);
+		response.setStatus(HttpStatus.HTTP_INTERNAL_ERROR);
 		PrintWriter printWriter = response.getWriter();
 		printWriter.append(objectMapper.writeValueAsString(result));
 	}

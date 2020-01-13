@@ -10,6 +10,7 @@ import com.alibaba.csp.sentinel.slots.system.SystemBlockException;
 import com.cloud.common.util.base.Result;
 import com.cloud.common.util.enums.ResultEnum;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,11 +22,13 @@ import java.io.IOException;
  * @Description Sentinel规则错误提示优化
  * @Date 2019/11/1
  */
+@Slf4j
 @Component
 public class ContentUrlBlockHandler implements UrlBlockHandler {
     @Override
     public void blocked(HttpServletRequest request, HttpServletResponse response, BlockException ex) throws IOException {
 
+        log.error("ContentUrlBlockHandler异常:{}", ex.getMessage());
         Result result;
         // 根据异常类型区分违反哪种规则
         if(ex instanceof FlowException){

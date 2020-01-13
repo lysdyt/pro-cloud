@@ -1,4 +1,4 @@
-package com.cloud.search.controller;
+package com.cloud.common.data.interceptor;
 
 
 import feign.RequestInterceptor;
