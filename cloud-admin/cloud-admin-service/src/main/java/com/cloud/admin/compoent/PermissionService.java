@@ -32,7 +32,7 @@ public class PermissionService {
 				return true;
 			}
 		}
-		log.debug("该用户没有:{}权限", permission);
+		log.info("该用户没有:{}权限", permission);
 		return false;
 	}
 
@@ -51,7 +51,7 @@ public class PermissionService {
 				return true;
 			}
 		}
-		log.debug("该用户没有:{}角色", enname);
+		log.info("该用户没有:{}角色", enname);
 		return false;
 	}
 }

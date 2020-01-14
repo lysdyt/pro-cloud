@@ -41,7 +41,7 @@ public class DynamicDataSourceConfig implements TransactionManagementConfigurer 
 		cads.setUsername(dataSourceProperties.getUsername());
 		cads.setPassword(dataSourceProperties.getPassword());
 		ds.setDefaultTargetDataSource(cads);
-		dataSourceMap.put(0, cads);
+		dataSourceMap.put("0", cads);
 		ds.setTargetDataSources(dataSourceMap);
 		return ds;
 	}
@@ -68,7 +68,7 @@ public class DynamicDataSourceConfig implements TransactionManagementConfigurer 
 
 			String decPwd = (String) db.get(DataSourceConstants.DS_USER_PWD);
 			ds.setPassword(decPwd);
-			dataSourceMap.put(db.get(DataSourceConstants.DS_ROUTE_KEY), ds);
+			dataSourceMap.put(db.get(DataSourceConstants.DS_ROUTE_KEY).toString(), ds);
 		}));
 
 		log.info("完毕 -> 初始化动态数据源,共计 {} 条", dataSourceMap.size());

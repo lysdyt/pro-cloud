@@ -13,7 +13,7 @@ import org.springframework.context.annotation.ComponentScan;
  */
 @EnableDiscoveryClient
 @SpringBootApplication
-@EnableFeignClients(basePackages ="com.cloud.admin.feign")
+@EnableFeignClients(basePackages ="com.cloud.admin.api")
 @ComponentScan({"com.cloud.search","com.cloud.common","com.cloud.admin.api"})
 public class CloudSearchApplication {
 
