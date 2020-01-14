@@ -1,12 +1,19 @@
 package com.cloud.common.data.mybatis;
 
 
+import com.baomidou.mybatisplus.core.parser.ISqlParser;
 import com.baomidou.mybatisplus.extension.plugins.OptimisticLockerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.tenant.TenantSqlParser;
+import com.cloud.common.data.tenant.ProTenantHandler;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -30,6 +37,23 @@ public class MybatisPlusConfig {
         return paginationInterceptor;
     }
 
+    /**
+     * 分页插件
+     * @param tenantHandler 租户处理器
+     * @return PaginationInterceptor
+     */
+    @Bean
+    @ConditionalOnMissingBean
+    @ConditionalOnExpression("${mybatisPlus.tenantEnable:false}")
+    public PaginationInterceptor paginationInterceptor(ProTenantHandler tenantHandler) {
+        PaginationInterceptor paginationInterceptor = new PaginationInterceptor();
+        List<ISqlParser> sqlParserList = new ArrayList<>();
+        TenantSqlParser tenantSqlParser = new TenantSqlParser();
+        tenantSqlParser.setTenantHandler(tenantHandler);
+        sqlParserList.add(tenantSqlParser);
+        paginationInterceptor.setSqlParserList(sqlParserList);
+        return paginationInterceptor;
+    }
 
 //    /**
 //     * 性能分析拦截器，不建议生产使用
