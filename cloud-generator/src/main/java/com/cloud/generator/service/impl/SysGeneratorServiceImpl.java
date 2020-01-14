@@ -64,6 +64,7 @@ public class SysGeneratorServiceImpl implements SysGeneratorService {
 			log.error("生成代码保存", e);
 		}
 		IoUtil.close(zip);
+		DynamicDataSourceContextHolder.clearDataSourceType();
 		return outputStream.toByteArray();
 	}
 
