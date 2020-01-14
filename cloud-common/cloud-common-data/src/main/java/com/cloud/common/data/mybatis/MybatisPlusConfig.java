@@ -38,6 +38,17 @@ public class MybatisPlusConfig {
     }
 
     /**
+     * 创建租户维护处理器对象
+     *
+     * @return 处理后的租户维护处理器
+     */
+    @Bean
+    @ConditionalOnMissingBean
+    public ProTenantHandler pigxTenantHandler() {
+        return new ProTenantHandler();
+    }
+
+    /**
      * 分页插件
      * @param tenantHandler 租户处理器
      * @return PaginationInterceptor
