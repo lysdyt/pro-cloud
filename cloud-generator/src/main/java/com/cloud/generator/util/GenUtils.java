@@ -36,7 +36,6 @@ public class GenUtils {
 	private final String SERVICE_IMPL_JAVA_VM = "ServiceImpl.java.ftl";
 	private final String CONTROLLER_JAVA_VM = "Controller.java.ftl";
 	private final String MAPPER_XML_VM = "Mapper.xml.ftl";
-	private final String MENU_SQL_VM = "menu.sql.ftl";
 
 
 	private final String BACK_END_PROJECT = "cloud";
@@ -50,8 +49,6 @@ public class GenUtils {
 		templates.add("Service.java.ftl");
 		templates.add("ServiceImpl.java.ftl");
 		templates.add("Controller.java.ftl");
-		templates.add("menu.sql.ftl");
-
 		return templates;
 	}
 
@@ -237,11 +234,6 @@ public class GenUtils {
 		if (template.contains(MAPPER_XML_VM)) {
 			return BACK_END_PROJECT + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator + "mapper" + File.separator + className + "Mapper.xml";
 		}
-
-		if (template.contains(MENU_SQL_VM)) {
-			return className.toLowerCase() + "_menu.sql";
-		}
-
 
 		return null;
 	}
