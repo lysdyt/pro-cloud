@@ -27,4 +27,15 @@ public class StaticVar {
      */
     public static final String FROM = "from";
 
+
+    /**
+     * head 放入的tenant
+     */
+    public static final String TENANT_ID = "user-tenant";
+
+    /**
+     * 默认的租户值
+     */
+    public static final Integer TENANT_ID_DEFAULT = 0;
+
 }
