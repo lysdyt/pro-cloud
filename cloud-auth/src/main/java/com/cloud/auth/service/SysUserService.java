@@ -18,7 +18,7 @@ public interface SysUserService extends IProService<SysUser> {
      * @param loginName
      * @return
      */
-    public SysUser loginByName(String loginName);
+    public SysUser loginByName(String loginName, String tenantId);
 
 
     /**
@@ -26,14 +26,14 @@ public interface SysUserService extends IProService<SysUser> {
      * @param mobile
      * @return
      */
-    public SysUser loginByPhone(String mobile);
+    public SysUser loginByPhone(String mobile, String tenantId);
 
     /**
      * QQ 登录
      * @param qqOpenid
      * @return
      */
-    public SysUser loginByQQ(String qqOpenid);
+    public SysUser loginByQQ(String qqOpenid, String tenantId);
 
 
     /**
@@ -41,6 +41,6 @@ public interface SysUserService extends IProService<SysUser> {
      * @param wxOpenid
      * @return
      */
-    public SysUser loginByWX(String wxOpenid);
+    public SysUser loginByWX(String wxOpenid, String tenantId);
 
 }

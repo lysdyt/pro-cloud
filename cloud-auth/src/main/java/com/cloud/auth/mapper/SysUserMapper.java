@@ -17,14 +17,14 @@ public interface SysUserMapper extends ProMapper<SysUser> {
      * @param loginName
      * @return
      */
-    public SysUser loginByName(String loginName);
+    public SysUser loginByName(String loginName, String tenantId);
 
     /**
      *  根据手机号登录
      * @param mobile
      * @return
      */
-    public SysUser loginByPhone(String mobile);
+    public SysUser loginByPhone(String mobile, String tenantId);
 
 
     /**
@@ -32,7 +32,7 @@ public interface SysUserMapper extends ProMapper<SysUser> {
      * @param qqOpenid
      * @return
      */
-    public SysUser loginByQQ(String qqOpenid);
+    public SysUser loginByQQ(String qqOpenid, String tenantId);
 
 
     /**
@@ -40,7 +40,7 @@ public interface SysUserMapper extends ProMapper<SysUser> {
      * @param wxOpenid
      * @return
      */
-    public SysUser loginByWX(String wxOpenid);
+    public SysUser loginByWX(String wxOpenid, String tenantId);
 
 
 

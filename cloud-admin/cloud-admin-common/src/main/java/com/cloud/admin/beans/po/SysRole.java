@@ -2,6 +2,7 @@ package com.cloud.admin.beans.po;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.cloud.common.entity.BaseEntity;
+import com.cloud.common.entity.TenantEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -18,7 +19,7 @@ import lombok.experimental.Accessors;
 @TableName("sys_role")
 @Accessors(chain = true)
 @ApiModel(description = "角色表")
-public class SysRole extends BaseEntity<SysRole> {
+public class SysRole extends TenantEntity<SysRole> {
     private static final long serialVersionUID = 1L;
 
 

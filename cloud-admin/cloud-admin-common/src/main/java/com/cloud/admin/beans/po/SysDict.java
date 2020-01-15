@@ -2,6 +2,7 @@ package com.cloud.admin.beans.po;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.cloud.common.entity.BaseEntity;
+import com.cloud.common.entity.TenantEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -17,7 +18,7 @@ import lombok.EqualsAndHashCode;
 @TableName("sys_dict")
 @EqualsAndHashCode(callSuper = true)
 @ApiModel(description = "字典表")
-public class SysDict extends BaseEntity<SysDict> {
+public class SysDict extends TenantEntity<SysDict> {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "类型字典/树")

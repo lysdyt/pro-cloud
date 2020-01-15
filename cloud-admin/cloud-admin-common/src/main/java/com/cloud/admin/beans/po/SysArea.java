@@ -1,6 +1,7 @@
 package com.cloud.admin.beans.po;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.cloud.common.entity.TenantTreeEntity;
 import com.cloud.common.entity.TreeEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -18,7 +19,7 @@ import lombok.experimental.Accessors;
 @TableName("sys_area")
 @Accessors(chain = true)
 @ApiModel(description = "区域表")
-public class SysArea extends TreeEntity<SysArea> {
+public class SysArea extends TenantTreeEntity<SysArea> {
     private static final long serialVersionUID = 1L;
 
 

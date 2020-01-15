@@ -23,12 +23,12 @@ public class SysUserServiceImpl extends BaseService<SysUserMapper, SysUser> impl
     private SysUserMapper sysUserMapper;
 
     @Override
-    public SysUser loginByName(String loginName) {
+    public SysUser loginByName(String loginName, String tenantId) {
         return sysUserMapper.loginByName(loginName);
     }
 
     @Override
-    public SysUser loginByPhone(String mobile) {
+    public SysUser loginByPhone(String mobile, String tenantId) {
         return sysUserMapper.loginByPhone(mobile);
     }
 
@@ -39,7 +39,7 @@ public class SysUserServiceImpl extends BaseService<SysUserMapper, SysUser> impl
      * @return
      */
     @Override
-    public SysUser loginByQQ(String qqOpenid) {
+    public SysUser loginByQQ(String qqOpenid, String tenantId) {
         return sysUserMapper.loginByQQ(qqOpenid);
     }
 
@@ -50,7 +50,7 @@ public class SysUserServiceImpl extends BaseService<SysUserMapper, SysUser> impl
      * @return
      */
     @Override
-    public SysUser loginByWX(String wxOpenid) {
+    public SysUser loginByWX(String wxOpenid, String tenantId) {
         return sysUserMapper.loginByWX(wxOpenid);
     }
 

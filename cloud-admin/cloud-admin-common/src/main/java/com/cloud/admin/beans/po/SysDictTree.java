@@ -1,6 +1,7 @@
 package com.cloud.admin.beans.po;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.cloud.common.entity.TenantTreeEntity;
 import com.cloud.common.entity.TreeEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -17,7 +18,7 @@ import lombok.EqualsAndHashCode;
 @TableName("sys_dict_tree")
 @EqualsAndHashCode(callSuper = true)
 @ApiModel(description = "区域表")
-public class SysDictTree extends TreeEntity<SysDictTree> {
+public class SysDictTree extends TenantTreeEntity<SysDictTree> {
     private static final long serialVersionUID = 1L;
 
 
