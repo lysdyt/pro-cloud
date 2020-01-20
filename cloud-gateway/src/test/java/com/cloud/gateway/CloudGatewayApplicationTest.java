@@ -4,18 +4,12 @@ package com.cloud.gateway;
 import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.captcha.LineCaptcha;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
 @Slf4j
 public class CloudGatewayApplicationTest {
 
 
-    @Test
+
     public  void test(){
         //定义图形验证码的长和宽
         LineCaptcha lineCaptcha = CaptchaUtil.createLineCaptcha(200, 100);

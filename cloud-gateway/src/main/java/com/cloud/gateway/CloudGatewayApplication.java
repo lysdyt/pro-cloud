@@ -1,7 +1,6 @@
 package com.cloud.gateway;
 
 import com.cloud.common.cache.annotation.EnableProCache;
-import com.cloud.common.data.annotation.EnableProData;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -13,7 +12,6 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  */
 @EnableDiscoveryClient
 @SpringBootApplication
-@EnableProData
 @EnableProCache
 public class CloudGatewayApplication {
 
